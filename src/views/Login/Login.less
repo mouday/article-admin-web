@@ -1,0 +1,53 @@
+.login-wrap {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #262f3e;
+}
+
+.login {
+  width: 400px;
+}
+
+.login__title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
+
+.login__form {
+  margin-top: 24px;
+}
+
+.login__form {
+  .ant-input,
+  .ant-input-password {
+    border-color: #1677ff;
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
+  }
+
+  .ant-input::placeholder,
+  .ant-input-password::placeholder {
+    color: #f8f8f8;
+  }
+
+  // 移除自动回填的背景色
+  .ant-input:-internal-autofill-previewed,
+  .ant-input:-internal-autofill-selected,
+  .ant-input-password:-internal-autofill-previewed,
+  .ant-input-password:-internal-autofill-selected,
+  .ant-input:-webkit-autofill,
+  .ant-input-password:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 1000s ease-out 0.5s;
+    background: transparent;
+  }
+
+  .anticon.ant-input-password-icon,
+  .anticon.ant-input-password-icon:hover {
+    color: #1677ff;
+  }
+}
