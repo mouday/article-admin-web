@@ -98,9 +98,9 @@ const AppLayout: React.FC = () => {
           <Outlet></Outlet>
         </Content>
 
-        <Footer style={{ textAlign: "center" }}>
+        {/* <Footer style={{ textAlign: "center" }}>
         Cron Admin ©2024 Created by Mouday
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   );

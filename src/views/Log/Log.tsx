@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import api from "@/request/api";
+import { log } from "console";
+import { useLocation } from "react-router-dom";
 
 export default function Log() {
-  const [headers, setHeaders] = useState({});
+  const location = useLocation();
+  const taskLogId = location.pathname.replace("/task-log/", "");
+
+  const [detail, setDetail] = useState("");
 
   const getData = async () => {
-    const res = await api.get({});
-    console.log(res);
-    setHeaders(res.headers);
+    const res = await api.getTaskLogDetail({
+      taskLogId: taskLogId,
+    });
+
+    if (res.ok) {
+      setDetail(res.data);
+    }
   };
 
   useEffect(() => {
@@ -16,8 +25,7 @@ export default function Log() {
 
   return (
     <div>
-      Log
-      <pre>{JSON.stringify(headers, null, 2)}</pre>
+      <pre>{detail}</pre>
     </div>
   );
 }

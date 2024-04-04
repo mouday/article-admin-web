@@ -28,6 +28,10 @@ const api = {
   updateTask: (params: any): Promise<IResult<any>> => {
     return request.post("/updateTask", params);
   },
+  updateTaskStatus: (params: any): Promise<IResult<any>> => {
+    return request.post("/updateTaskStatus", params);
+  },
+  
   removeTask: (params: any): Promise<IResult<any>> => {
     return request.post("/removeTask", params);
   },
@@ -43,7 +47,13 @@ const api = {
   
   getTaskLogList: (params: any): Promise<IResult<any>> => {
     return request.post("/getTaskLogList", params);
+  }, 
+  
+  getTaskLogDetail: (params: any): Promise<IResult<any>> => {
+    return request.post("/getTaskLogDetail", params);
   },
+
+  
   
 };
 

@@ -54,10 +54,10 @@ export const routes: Route[] = [
       //   path: "/form",
       //   element: withLoadingComponent(<Form />),
       // },
-      // {
-      //   path: "/log",
-      //   element: withLoadingComponent(<Log />),
-      // },
+      {
+        path: "/task-log/:taskLogId",
+        element: withLoadingComponent(<Log />),
+      },
       // {
       //   path: "/user",
       //   element: withLoadingComponent(<User />),
