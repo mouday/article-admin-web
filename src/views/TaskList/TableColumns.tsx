@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import type { ColumnsType } from "antd/es/table";
 import { Space, Switch, Popconfirm, Button, Table, Tag } from "antd";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
@@ -49,7 +50,6 @@ export default [
       <Space size="middle">
         <Button
           type="primary"
-          type="link"
           onClick={() => {
             record.handleEditRow(record);
           }}

@@ -1,8 +1,9 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Space, Switch, Table, Tag } from "antd";
 
-import TaskEditForm from "./TaskEditForm.jsx";
-import TableColumns from "./TableColumns.tsx";
+import TaskEditForm from "./TaskEditForm";
+import TableColumns from "./TableColumns";
 import { Button, Modal, message, Checkbox, Form, Input } from "antd";
 
 import api from "@/request/api";

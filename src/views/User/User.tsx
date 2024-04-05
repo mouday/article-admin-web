@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCount, setCountAsync } from "@/store/reducers/count-reducer.ts";

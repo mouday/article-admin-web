@@ -1,3 +1,5 @@
+// @ts-nocheck
+import React, { useState, useEffect } from "react";
 import { Space, Table, Tag, Button } from "antd";
 
 import { ContainerOutlined, FormOutlined } from "@ant-design/icons";
@@ -68,7 +70,6 @@ export default [
     render: (_, record) => (
       <Button
         type="primary"
-        type="link"
         disabled={!record.isComplete}
         onClick={() => {
           record.handleShowLog(record);

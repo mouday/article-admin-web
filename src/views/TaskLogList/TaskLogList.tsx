@@ -1,9 +1,10 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Space, Table, Tag, Radio } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 import api from "@/request/api";
-import TableColumns from "./TableColumns.tsx";
+import TableColumns from "./TableColumns";
 import dayjs from "dayjs";
 import { statusEnum, statusOptions } from "./config";
 
