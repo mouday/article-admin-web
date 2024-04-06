@@ -18,7 +18,7 @@ const Log = React.lazy(() => import("../views/Log/Log"));
 const User = React.lazy(() => import("../views/User/User"));
 
 const withLoadingComponent = (component) => (
-  <React.Suspense fallback={<div>Loading...</div>}>{component}</React.Suspense>
+  <React.Suspense fallback={<div></div>}>{component}</React.Suspense>
 );
 
 export const routes: Route[] = [

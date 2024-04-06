@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import api from "@/request/api";
 import { log } from "console";
 import { useLocation } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 
 export default function Log() {
   const location = useLocation();
-  const taskLogId = location.pathname.replace("/task-log/", "");
+  // const taskLogId = location.pathname.replace("/task-log/", "");
+  const [searchParams, setSearchParms] = useSearchParams();
+  console.log(searchParams);
+  const { taskLogId } = useParams();
 
   const [detail, setDetail] = useState("");
 

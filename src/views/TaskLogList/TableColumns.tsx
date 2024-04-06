@@ -69,7 +69,7 @@ export default [
     width: 60,
     render: (_, record) => (
       <Button
-        type="primary"
+        type="link"
         disabled={!record.isComplete}
         onClick={() => {
           record.handleShowLog(record);

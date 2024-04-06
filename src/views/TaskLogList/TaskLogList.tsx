@@ -7,10 +7,12 @@ import api from "@/request/api";
 import TableColumns from "./TableColumns";
 import dayjs from "dayjs";
 import { statusEnum, statusOptions } from "./config";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 const App: React.FC = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const [status, setStatus] = useState(0);
 
@@ -22,7 +24,8 @@ const App: React.FC = () => {
   });
 
   const handleShowLog = (record) => {
-    window.open(`/task-log/${record.taskLogId}`, "_blank");
+    // navigate(`/task-log/${record.taskLogId}`);
+    window.open(`/#/task-log/${record.taskLogId}`, "_blank");
   };
 
   const getData = async (value) => {

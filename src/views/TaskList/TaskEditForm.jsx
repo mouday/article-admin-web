@@ -29,7 +29,15 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
   const onFinish = async (values) => {
     console.log("Success:", values);
 
-    const res = await api.addTask(values);
+    let res = null;
+    if (currentRow && currentRow.taskId) {
+      res = await api.updateTask({
+        ...values,
+        taskId: currentRow.taskId,
+      });
+    } else {
+      res = await api.addTask(values);
+    }
 
     if (res.ok) {
       message.success({

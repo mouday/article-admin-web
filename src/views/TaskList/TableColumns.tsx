@@ -49,7 +49,7 @@ export default [
     render: (_, record) => (
       <Space size="middle">
         <Button
-          type="primary"
+          type="link"
           onClick={() => {
             record.handleEditRow(record);
           }}
