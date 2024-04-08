@@ -42,16 +42,21 @@ const App: React.FC = () => {
         res.data.list.map((item) => {
           item.handleShowLog = handleShowLog;
 
-          const date1 = dayjs(item.createTime);
-          const date2 = dayjs(item.updateTime);
-
-          item.diffTime = date2.diff(date1, "seconds");
-          
           item.isComplete = [
             statusEnum.TaskStatusStartError,
             statusEnum.TaskStatusRunningSuccess,
             statusEnum.TaskStatusRunningError,
           ].includes(item.status);
+
+          const date1 = dayjs(item.createTime);
+          const date2 = dayjs(item.updateTime);
+          const now = dayjs();
+
+          if (item.isComplete) {
+            item.diffTime = date2.diff(date1, "seconds");
+          } else {
+            item.diffTime = now.diff(date1, "seconds");
+          }
 
           item.hasRunLog = [
             statusEnum.TaskStatusStartRun,
