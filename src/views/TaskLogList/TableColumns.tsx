@@ -5,6 +5,30 @@ import { Space, Table, Tag, Button } from "antd";
 import { ContainerOutlined, FormOutlined } from "@ant-design/icons";
 
 import { statusEnum, statusOptions } from "./config";
+import {
+  useSearchParams,
+  useParams,
+  useHref,
+  useResolvedPath,
+} from "react-router-dom";
+
+function ToLogDetail({ record }) {
+  // console.log(record);
+
+  const logDetailUrl = useHref({ pathname: `/task-log/${record.taskLogId}` });
+
+  const handleShowLog = () => {
+    // navigate(`/task-log/${record.taskLogId}`);
+
+    window.open(logDetailUrl, "_blank");
+  };
+
+  return (
+    <Button type="link" disabled={!record.hasRunLog} onClick={handleShowLog}>
+      <ContainerOutlined />
+    </Button>
+  );
+}
 
 export default [
   {
@@ -67,16 +91,6 @@ export default [
     key: "action",
     align: "center",
     width: 60,
-    render: (_, record) => (
-      <Button
-        type="link"
-        disabled={!record.hasRunLog}
-        onClick={() => {
-          record.handleShowLog(record);
-        }}
-      >
-        <ContainerOutlined />
-      </Button>
-    ),
+    render: (_, record) => <ToLogDetail record={record}></ToLogDetail>,
   },
 ];

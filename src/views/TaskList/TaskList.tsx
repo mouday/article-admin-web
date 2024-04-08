@@ -68,6 +68,12 @@ const App: React.FC = () => {
     }
   };
 
+
+  const handleShowLog = (record) => {
+    // navigate(`/task-log/${record.taskLogId}`);
+    window.open(`/#/task-log-list?taskId=${record.taskId}`, "_blank");
+  };
+
   const getData = async (value) => {
     setLoading(true);
     const res = await api.getTaskList({
@@ -81,6 +87,7 @@ const App: React.FC = () => {
           item.handleStatusChange = handleStatusChange;
           item.handleEditRow = handleEditRow;
           item.handleDeleteRow = handleDeleteRow;
+          item.handleShowLog = handleShowLog;
           return item;
         })
       );

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import type { ColumnsType } from "antd/es/table";
 import { Space, Switch, Popconfirm, Button, Table, Tag } from "antd";
-import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  FormOutlined,
+  ContainerOutlined,
+} from "@ant-design/icons";
 
 export default [
   {
@@ -39,6 +43,22 @@ export default [
         ></Switch>
       );
     },
+  },
+  {
+    title: "日志",
+    key: "action",
+    align: "center",
+    width: 60,
+    render: (_, record) => (
+      <Button
+        type="link"
+        onClick={() => {
+          record.handleShowLog(record);
+        }}
+      >
+        <ContainerOutlined />
+      </Button>
+    ),
   },
   {
     title: "操作",

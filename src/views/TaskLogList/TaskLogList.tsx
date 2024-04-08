@@ -1,8 +1,13 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import { Space, Table, Tag, Radio } from "antd";
+import { Space, Switch, Table, Tag, Radio, Flex } from "antd";
 import type { ColumnsType } from "antd/es/table";
-
+import {
+  useSearchParams,
+  useParams,
+  useHref,
+  useResolvedPath,
+} from "react-router-dom";
 import api from "@/request/api";
 import TableColumns from "./TableColumns";
 import dayjs from "dayjs";
@@ -13,6 +18,14 @@ const App: React.FC = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  //
+  const [searchParams, setSearchParms] = useSearchParams();
+  const taskId = searchParams.get("taskId");
+  const timeStatus = false;
+
+  const logDetailUrl = useHref({ pathname: `/task-log` });
+
+  const [timer, setTimer] = useState(null);
 
   const [status, setStatus] = useState(0);
 
@@ -23,11 +36,6 @@ const App: React.FC = () => {
     pageSize: 10,
   });
 
-  const handleShowLog = (record) => {
-    // navigate(`/task-log/${record.taskLogId}`);
-    window.open(`/#/task-log/${record.taskLogId}`, "_blank");
-  };
-
   const getData = async (value) => {
     setLoading(true);
 
@@ -35,13 +43,12 @@ const App: React.FC = () => {
       page: value.current,
       size: value.pageSize,
       status: value.status,
+      taskId: taskId,
     });
 
     if (res.ok) {
       setList(
         res.data.list.map((item) => {
-          item.handleShowLog = handleShowLog;
-
           item.isComplete = [
             statusEnum.TaskStatusStartError,
             statusEnum.TaskStatusRunningSuccess,
@@ -82,6 +89,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     getData(pagination);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   const handlePageChange = (value) => {
@@ -113,21 +124,49 @@ const App: React.FC = () => {
     },
     ...statusOptions,
   ];
+
+  const handleTimeStatusChange = (checked) => {
+    console.log(checked);
+
+    if (checked) {
+      setTimer((pre) => {
+        return setInterval(() => {
+          handlePageChange();
+        }, 1000 * 3);
+      });
+    } else {
+      setTimer((pre) => {
+        clearInterval(pre);
+        return null;
+      });
+    }
+  };
+
   return (
     <>
-      <Radio.Group
-        value={status}
-        buttonStyle="solid"
-        onChange={handleStatusChange}
-      >
-        {statusRadioOptions.map((item) => {
-          return (
-            <Radio.Button key={item.value} value={item.value}>
-              {item.label}
-            </Radio.Button>
-          );
-        })}
-      </Radio.Group>
+      <Flex justify="space-between">
+        <Radio.Group
+          value={status}
+          buttonStyle="solid"
+          onChange={handleStatusChange}
+        >
+          {statusRadioOptions.map((item) => {
+            return (
+              <Radio.Button key={item.value} value={item.value}>
+                {item.label}
+              </Radio.Button>
+            );
+          })}
+        </Radio.Group>
+
+        <div className="flex items-center">
+          <span className="mr-2">定时刷新</span>
+          <Switch
+            defaultChecked={timeStatus}
+            onChange={handleTimeStatusChange}
+          ></Switch>
+        </div>
+      </Flex>
 
       <Table
         className="mt-4"
