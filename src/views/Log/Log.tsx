@@ -3,6 +3,7 @@ import api from "@/request/api";
 import { log } from "console";
 import { useLocation } from "react-router-dom";
 import { useSearchParams, useParams } from "react-router-dom";
+import "./Log.less";
 
 export default function Log() {
   const location = useLocation();
@@ -28,7 +29,7 @@ export default function Log() {
   }, []);
 
   return (
-    <div>
+    <div className="log-wrap">
       <pre>{detail}</pre>
     </div>
   );

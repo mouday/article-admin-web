@@ -30,13 +30,13 @@ export const statusOptions = [
   },
   {
     label: "开始运行",
-    value: statusEnum.TaskStatusStartSuccess,
-    color: yellow[6],
+    value: statusEnum.TaskStatusStartRun,
+    color: blue[6],
   },
   {
     label: "运行中",
     value: statusEnum.TaskStatusRunning,
-    color: yellow[6],
+    color: blue[6],
   },
   {
     label: "运行成功",
