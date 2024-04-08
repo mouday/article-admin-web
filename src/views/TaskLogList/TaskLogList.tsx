@@ -51,7 +51,7 @@ const App: React.FC = () => {
             statusEnum.TaskStatusStartError,
             statusEnum.TaskStatusRunningSuccess,
             statusEnum.TaskStatusRunningError,
-          ]
+          ].includes(item.status);
 
           item.hasRunLog = [
             statusEnum.TaskStatusStartRun,
