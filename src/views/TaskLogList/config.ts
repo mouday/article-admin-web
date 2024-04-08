@@ -5,10 +5,16 @@ export const statusEnum = {
   TaskStatusStartError: 1,
   // 启动成功
   TaskStatusStartSuccess: 2,
+  // === 运行阶段 ===
+	// 开始运行
+	TaskStatusStartRun: 3,
+	// 运行中
+	TaskStatusRunning: 4,
+
   // 运行成功
-  TaskStatusRunningSuccess: 3,
+  TaskStatusRunningSuccess: 5,
   // 运行失败
-  TaskStatusRunningError: 4,
+  TaskStatusRunningError: 6,
 };
 
 export const statusOptions = [
@@ -18,8 +24,18 @@ export const statusOptions = [
     color: red[5],
   },
   {
-    label: "运行中",
+    label: "启动成功",
     value: statusEnum.TaskStatusStartSuccess,
+    color: yellow[6],
+  },
+  {
+    label: "开始运行",
+    value: statusEnum.TaskStatusStartSuccess,
+    color: yellow[6],
+  },
+  {
+    label: "运行中",
+    value: statusEnum.TaskStatusRunning,
     color: yellow[6],
   },
   {
