@@ -54,7 +54,7 @@ export default [
     width: 120,
     align: "center",
     render: (_, record) => {
-      if (record.isComplete) {
+      if (record.hasRunLog) {
         return <span>{record.diffTime}</span>;
       } else {
         return <>-</>;

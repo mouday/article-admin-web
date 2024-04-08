@@ -46,6 +46,12 @@ const App: React.FC = () => {
           const date2 = dayjs(item.updateTime);
 
           item.diffTime = date2.diff(date1, "seconds");
+          
+          item.isComplete = [
+            statusEnum.TaskStatusStartError,
+            statusEnum.TaskStatusRunningSuccess,
+            statusEnum.TaskStatusRunningError,
+          ]
 
           item.hasRunLog = [
             statusEnum.TaskStatusStartRun,
