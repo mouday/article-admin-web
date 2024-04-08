@@ -70,7 +70,7 @@ export default [
     render: (_, record) => (
       <Button
         type="link"
-        disabled={!record.isComplete}
+        disabled={!record.hasRunLog}
         onClick={() => {
           record.handleShowLog(record);
         }}

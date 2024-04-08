@@ -47,7 +47,9 @@ const App: React.FC = () => {
 
           item.diffTime = date2.diff(date1, "seconds");
 
-          item.isComplete = [
+          item.hasRunLog = [
+            statusEnum.TaskStatusStartRun,
+            statusEnum.TaskStatusRunning,
             statusEnum.TaskStatusRunningSuccess,
             statusEnum.TaskStatusRunningError,
           ].includes(item.status);
