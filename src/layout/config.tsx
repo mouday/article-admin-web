@@ -14,6 +14,25 @@ export const MENU_ITEMS = [
   //   key: "/home",
   //   icon: <PieChartOutlined />,
   // },
+  
+
+
+  {
+    label: "执行器",
+    key: "/runner-list",
+    icon: <AppstoreOutlined />,
+    // children: [
+    //   {
+    //     label: "Table",
+    //     key: "/table",
+    //   },
+    //   {
+    //     label: "Form",
+    //     key: "/form",
+    //   },
+    // ],
+  },
+
   {
     label: "任务列表",
     key: "/task-list",

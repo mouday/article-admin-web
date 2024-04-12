@@ -1,5 +1,5 @@
 /**
- * ref: 
+ * ref:
  * 如何优雅的使用react router v6, 并实现全局守卫
  * https://juejin.cn/post/7222787944297791543
  */
@@ -8,12 +8,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "./index";
 import { getToken } from "@/utils/token-util";
 
-
 /**
  * 在路由表中获取到当前的路由对应的路由
- * @param routers 
- * @param path 
- * @returns 
+ * @param routers
+ * @param path
+ * @returns
  */
 const getCurrentRouterMap = (routers: Route[], path: string) => {
   for (let router of routers) {
@@ -30,22 +29,25 @@ const getCurrentRouterMap = (routers: Route[], path: string) => {
 
 /**
  * 路由前置守卫
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export default function RouterBefore({ children }: any) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const allowUrls = ["/login"];
 
   useEffect(() => {
     const router = getCurrentRouterMap(routes, location.pathname);
 
     const token = getToken();
 
-    if (!token && router.auth) {
+    if (allowUrls.indexOf(location.pathname) >= 0) {
+      // pass
+    } else if (!token) {
       navigate("/login");
     }
-
   }, [location.pathname]);
 
   return children;

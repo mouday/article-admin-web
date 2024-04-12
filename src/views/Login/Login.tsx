@@ -29,6 +29,8 @@ export default function Login() {
       tokenUtil.setToken(res.data.token);
 
       navigateTo("/");
+    } else{
+      message.error(res.msg);
     }
   };
   // api

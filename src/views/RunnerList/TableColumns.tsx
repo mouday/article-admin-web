@@ -9,7 +9,7 @@ import {
 
 export default [
   {
-    title: "任务描述",
+    title: "执行器名称",
     dataIndex: "title",
     key: "title",
     align: "center",
@@ -17,38 +17,18 @@ export default [
       return <div className="text-left">{record.title}</div>;
     },
   },
-
+  // {
+  //   title: "Cron",
+  //   align: "center",
+  //   dataIndex: "cron",
+  //   key: "cron",
+  //   width: 200,
+  //   render: (_, record) => {
+  //     return <div className="text-left">{record.cron}</div>;
+  //   },
+  // },
   {
-    title: "执行器",
-    dataIndex: "runnerName",
-    key: "runnerName",
-    align: "center",
-    render: (_, record) => {
-      return <div className="text-left">{record.runnerName}</div>;
-    },
-  },
-
-  {
-    title: "任务名称",
-    dataIndex: "taskName",
-    key: "taskName",
-    align: "center",
-    render: (_, record) => {
-      return <div className="text-left">{record.taskName}</div>;
-    },
-  },
-  {
-    title: "Cron",
-    align: "center",
-    dataIndex: "cron",
-    key: "cron",
-    width: 200,
-    render: (_, record) => {
-      return <div className="text-left">{record.cron}</div>;
-    },
-  },
-  {
-    title: "运行状态",
+    title: "状态",
     align: "center",
     dataIndex: "status",
     key: "status",
@@ -64,27 +44,27 @@ export default [
       );
     },
   },
-  {
-    title: "日志",
-    key: "action",
-    align: "center",
-    width: 60,
-    render: (_, record) => (
-      <Button
-        type="link"
-        onClick={() => {
-          record.handleShowLog(record);
-        }}
-      >
-        <ContainerOutlined />
-      </Button>
-    ),
-  },
+  // {
+  //   title: "日志",
+  //   key: "action",
+  //   align: "center",
+  //   width: 60,
+  //   render: (_, record) => (
+  //     <Button
+  //       type="link"
+  //       onClick={() => {
+  //         record.handleShowLog(record);
+  //       }}
+  //     >
+  //       <ContainerOutlined />
+  //     </Button>
+  //   ),
+  // },
   {
     title: "操作",
     align: "center",
-    dataIndex: "taskId",
-    key: "taskId",
+    dataIndex: "runnerId",
+    key: "runnerId",
     width: 160,
     render: (_, record) => (
       <Space size="middle">

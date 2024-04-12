@@ -1,59 +1,73 @@
-import React, { useState, useEffect } from "react";
-import { Button, Space, Modal, Checkbox, message, Form, Input } from "antd";
-import { Switch } from "antd";
-
-import api from "@/request/api";
+import React, { useState, useEffect } from 'react'
+import { Button, Space, Modal, Checkbox, message, Form, Input } from 'antd'
+import { Switch } from 'antd'
+import { Select } from 'antd'
+import api from '@/request/api'
 
 export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
-  const [list, setList] = useState([]);
-  const initialValues = { status: true };
+  const [list, setList] = useState([])
+  const [runnerList, setRunnerList] = useState([])
+  const initialValues = { 
+    status: true,
+    runnerId: null,
+  }
+
   // const [messageApi, contextHolder] = message.useMessage();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   const getData = async () => {
     const res = await api.getTask({
       taskId: currentRow.taskId,
-    });
+    })
 
     if (res.ok) {
-      form.setFieldsValue(res.data);
+      form.setFieldsValue(res.data)
     }
-  };
+  }
+
+  const getRunnerList = async () => {
+    const res = await api.getRunnerList({})
+    if (res.ok) {
+      setRunnerList(res.data.list)
+    }
+  }
 
   useEffect(() => {
     if (currentRow && currentRow.taskId) {
-      getData();
+      getData()
     }
-  }, []);
+
+    getRunnerList()
+  }, [])
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
+    console.log('Success:', values)
 
-    let res = null;
+    let res = null
     if (currentRow && currentRow.taskId) {
       res = await api.updateTask({
         ...values,
         taskId: currentRow.taskId,
-      });
+      })
     } else {
-      res = await api.addTask(values);
+      res = await api.addTask(values)
     }
 
     if (res.ok) {
       message.success({
-        content: "操作成功",
-      });
-      onSuccess();
+        content: '操作成功',
+      })
+      onSuccess()
     } else {
       message.error({
         content: res.msg,
-      });
+      })
     }
-  };
+  }
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+    console.log('Failed:', errorInfo)
+  }
 
   return (
     <Form
@@ -68,29 +82,48 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
       autoComplete="off"
     >
       <Form.Item
-        label="任务名称"
+        label="任务描述"
         name="title"
         rules={[
           {
             required: true,
-            message: "请输入任务名称",
+            message: '请输入任务描述',
+          },
+        ]}
+      >
+        <Input placeholder="任务描述" />
+      </Form.Item>
+
+      <Form.Item
+        label="执行器"
+        name="runnerId"
+        rules={[
+          {
+            required: true,
+            message: '请选择执行器',
+          },
+        ]}
+      >
+        <Select
+          style={{ width: 120 }}
+          options={runnerList.map((item) => ({
+            value: item.runnerId,
+            label: item.title,
+          }))}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label="任务名称"
+        name="taskName"
+        rules={[
+          {
+            required: true,
+            message: '请输入任务名称',
           },
         ]}
       >
         <Input placeholder="任务名称" />
-      </Form.Item>
-
-      <Form.Item
-        label="Url"
-        name="url"
-        rules={[
-          {
-            required: true,
-            message: "请输入Url",
-          },
-        ]}
-      >
-        <Input placeholder="Url" />
       </Form.Item>
 
       <Form.Item
@@ -99,14 +132,18 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
         rules={[
           {
             required: true,
-            message: "输入crontab表达式",
+            message: '输入crontab表达式',
           },
         ]}
       >
         <Input placeholder="cron表达式，示例：秒 分 时 日 月 周" />
       </Form.Item>
 
-      <Form.Item label="启用" name="status" valuePropName="checked">
+      <Form.Item
+        label="启用"
+        name="status"
+        valuePropName="checked"
+      >
         <Switch />
       </Form.Item>
 
@@ -119,11 +156,14 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
         <Space>
           <Button onClick={onCancel}>取消</Button>
 
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+          >
             保存
           </Button>
         </Space>
       </Form.Item>
     </Form>
-  );
+  )
 }

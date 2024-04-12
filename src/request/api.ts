@@ -53,8 +53,30 @@ const api = {
     return request.post("/getTaskLogDetail", params);
   },
 
+  // 执行器
+  addRunner: (params: any): Promise<IResult<any>> => {
+    return request.post("/addRunner", params);
+  },
   
+  updateRunner: (params: any): Promise<IResult<any>> => {
+    return request.post("/updateRunner", params);
+  },
+
+  updateRunnerStatus: (params: any): Promise<IResult<any>> => {
+    return request.post("/updateRunnerStatus", params);
+  },
   
+  removeRunner: (params: any): Promise<IResult<any>> => {
+    return request.post("/removeRunner", params);
+  },
+
+  getRunner: (params: any): Promise<IResult<any>> => {
+    return request.post("/getRunner", params);
+  },
+
+  getRunnerList: (params: any): Promise<IResult<any>> => {
+    return request.post("/getRunnerList", params);
+  },
 };
 
 export default api;

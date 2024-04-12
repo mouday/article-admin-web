@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
   DesktopOutlined,
   FileOutlined,
@@ -6,55 +6,64 @@ import {
   TeamOutlined,
   UserOutlined,
   AppstoreOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme, Dropdown } from "antd";
-import "./layout.css";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Link, useRoutes, Outlet } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+} from '@ant-design/icons'
+import type { MenuProps } from 'antd'
+import { Breadcrumb, Layout, Menu, theme, Dropdown } from 'antd'
+import './layout.css'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { Link, useRoutes, Outlet } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-import LayoutMenu from "./LayoutMenu";
-import { getCurrentPath } from "./config";
-import { Avatar, Button } from "antd";
+import LayoutMenu from './LayoutMenu'
+import { getCurrentPath } from './config'
+import { Avatar, Button } from 'antd'
+import { getToken, removeToken } from '@/utils/token-util'
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer, Sider } = Layout
+
+function Logout() {
+  const navigateTo = useNavigate()
+
+  const handleClick = () => {
+    removeToken()
+    navigateTo('/login')
+  }
+
+  return <div onClick={handleClick}>退出</div>
+}
 
 const AppLayout: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const { token } = theme.useToken();
-  const currentRoute = useLocation();
+  const [collapsed, setCollapsed] = useState(false)
+  const { token } = theme.useToken()
+  const currentRoute = useLocation()
+  const navigateTo = useNavigate()
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([])
 
   const dropdownItems = [
     {
-      key: "logout",
-      label: (
-        <a target="_self" href="/login">
-          退出
-        </a>
-      ),
+      key: 'logout',
+      label: <Logout></Logout>,
     },
-  ];
+  ]
 
   const { username } = useSelector((state: any) => {
     return {
       username: state.user.username,
-    };
-  });
+    }
+  })
 
   useEffect(() => {
-    const routePath = getCurrentPath(currentRoute.pathname);
+    const routePath = getCurrentPath(currentRoute.pathname)
 
     setItems(
       routePath.map((item) => {
         return {
           title: <a href={item.key}>{item.label}</a>,
-        };
+        }
       })
-    );
-  }, [currentRoute]);
+    )
+  }, [currentRoute])
 
   return (
     <Layout className="layout__wrap">
@@ -79,7 +88,10 @@ const AppLayout: React.FC = () => {
         {/* 头部 */}
         <Header className="layout__header">
           {/* 面包屑 */}
-          <Breadcrumb items={items} style={{ lineHeight: "64px" }} />
+          <Breadcrumb
+            items={items}
+            style={{ lineHeight: '64px' }}
+          />
 
           <Dropdown
             menu={{ items: dropdownItems }}
@@ -87,7 +99,10 @@ const AppLayout: React.FC = () => {
             arrow
           >
             <div className="layout__user">
-              <Avatar size={32} icon={<UserOutlined />} />
+              <Avatar
+                size={32}
+                icon={<UserOutlined />}
+              />
               <span className="layout__username">{username}</span>
             </div>
           </Dropdown>
@@ -103,7 +118,7 @@ const AppLayout: React.FC = () => {
         </Footer> */}
       </Layout>
     </Layout>
-  );
-};
+  )
+}
 
-export default AppLayout;
+export default AppLayout
