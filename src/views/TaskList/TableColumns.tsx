@@ -69,7 +69,7 @@ export default [
     title: '日志',
     key: 'action',
     align: 'center',
-    width: 60,
+    width: 80,
     render: (_, record) => (
       <Button
         type="link"
