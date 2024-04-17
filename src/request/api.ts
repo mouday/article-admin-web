@@ -77,6 +77,11 @@ const api = {
   getRunnerList: (params: any): Promise<IResult<any>> => {
     return request.post("/getRunnerList", params);
   },
+  
+  runTask: (params: any): Promise<IResult<any>> => {
+    return request.post("/runTask", params);
+  },
+  
 };
 
 export default api;

@@ -1,97 +1,111 @@
-import React, { useState, useEffect } from "react";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Switch, Popconfirm, Button, Table, Tag } from "antd";
+import React, { useState, useEffect } from 'react'
+import type { ColumnsType } from 'antd/es/table'
+import { Space, Switch, Popconfirm, Button, Table, Tag } from 'antd'
 import {
   DeleteOutlined,
   FormOutlined,
   ContainerOutlined,
-} from "@ant-design/icons";
+  PlayCircleOutlined,
+} from '@ant-design/icons'
 
 export default [
   {
-    title: "任务描述",
-    dataIndex: "title",
-    key: "title",
-    align: "center",
+    title: '任务描述',
+    dataIndex: 'title',
+    key: 'title',
+    align: 'center',
     render: (_, record) => {
-      return <div className="text-left">{record.title}</div>;
+      return <div className="text-left">{record.title}</div>
     },
   },
 
-  {
-    title: "执行器",
-    dataIndex: "runnerName",
-    key: "runnerName",
-    align: "center",
-    render: (_, record) => {
-      return <div className="text-left">{record.runnerName}</div>;
-    },
-  },
+  // {
+  //   title: '执行器',
+  //   dataIndex: 'runnerName',
+  //   key: 'runnerName',
+  //   align: 'center',
+  //   render: (_, record) => {
+  //     return <div className="text-left">{record.runnerName}</div>
+  //   },
+  // },
 
   {
-    title: "任务名称",
-    dataIndex: "taskName",
-    key: "taskName",
-    align: "center",
+    title: '调用链接',
+    dataIndex: 'url',
+    key: 'url',
+    align: 'center',
     render: (_, record) => {
-      return <div className="text-left">{record.taskName}</div>;
+      return <div className="text-left">{record.url}</div>
     },
   },
   {
-    title: "Cron",
-    align: "center",
-    dataIndex: "cron",
-    key: "cron",
+    title: 'Cron',
+    align: 'center',
+    dataIndex: 'cron',
+    key: 'cron',
     width: 200,
     render: (_, record) => {
-      return <div className="text-left">{record.cron}</div>;
+      return <div className="text-left">{record.cron}</div>
     },
   },
   {
-    title: "运行状态",
-    align: "center",
-    dataIndex: "status",
-    key: "status",
+    title: '运行状态',
+    align: 'center',
+    dataIndex: 'status',
+    key: 'status',
     width: 100,
     render: (_, record) => {
       return (
         <Switch
           defaultChecked={record.status}
           onChange={(val) => {
-            record.handleStatusChange(record, val);
+            record.handleStatusChange(record, val)
           }}
         ></Switch>
-      );
+      )
     },
   },
   {
-    title: "日志",
-    key: "action",
-    align: "center",
+    title: '日志',
+    key: 'action',
+    align: 'center',
     width: 60,
     render: (_, record) => (
       <Button
         type="link"
         onClick={() => {
-          record.handleShowLog(record);
+          record.handleShowLog(record)
         }}
       >
         <ContainerOutlined />
       </Button>
     ),
   },
+
   {
-    title: "操作",
-    align: "center",
-    dataIndex: "taskId",
-    key: "taskId",
+    title: '操作',
+    align: 'center',
+    dataIndex: 'taskId',
+    key: 'taskId',
     width: 160,
     render: (_, record) => (
       <Space size="middle">
+        <Popconfirm
+          title="确认运行"
+          description=""
+          onConfirm={() => {
+            record.handleRunRow(record)
+          }}
+        >
+          <Button type="link">
+            <PlayCircleOutlined className="cursor-pointer" />
+          </Button>
+        </Popconfirm>
+
         <Button
           type="link"
           onClick={() => {
-            record.handleEditRow(record);
+            record.handleEditRow(record)
           }}
         >
           <FormOutlined className="cursor-pointer" />
@@ -101,14 +115,17 @@ export default [
           title="确认删除"
           description=""
           onConfirm={() => {
-            record.handleDeleteRow(record);
+            record.handleDeleteRow(record)
           }}
         >
-          <Button danger type="link">
+          <Button
+            danger
+            type="link"
+          >
             <DeleteOutlined className="cursor-pointer" />
           </Button>
         </Popconfirm>
       </Space>
     ),
   },
-];
+]

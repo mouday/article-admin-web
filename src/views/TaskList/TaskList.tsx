@@ -69,6 +69,22 @@ const App: React.FC = () => {
   };
 
 
+  const handleRunRow = async (record) => {
+    const res = await api.runTask({
+      taskId: record.taskId,
+    });
+
+    if (res.ok) {
+      message.success({
+        content: "操作成功",
+      });
+    } else {
+      message.error({
+        content: res.msg,
+      });
+    }
+  }
+
   const handleShowLog = (record) => {
     // navigate(`/task-log/${record.taskLogId}`);
     window.open(`/#/task-log-list?taskId=${record.taskId}`, "_blank");
@@ -88,6 +104,7 @@ const App: React.FC = () => {
           item.handleEditRow = handleEditRow;
           item.handleDeleteRow = handleDeleteRow;
           item.handleShowLog = handleShowLog;
+          item.handleRunRow = handleRunRow;
           return item;
         })
       );

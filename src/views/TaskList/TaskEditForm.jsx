@@ -3,11 +3,15 @@ import { Button, Space, Modal, Checkbox, message, Form, Input } from 'antd'
 import { Switch } from 'antd'
 import { Select } from 'antd'
 import api from '@/request/api'
+import { isValidCron } from 'cron-validator'
+import { isValidCronExpression, getCrontabSchedule } from '@/utils/cron-util'
 
 export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
   const [list, setList] = useState([])
   const [runnerList, setRunnerList] = useState([])
-  const initialValues = { 
+  const [cronNextList, setCronNextList] = useState([])
+
+  const initialValues = {
     status: true,
     runnerId: null,
   }
@@ -22,6 +26,7 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
 
     if (res.ok) {
       form.setFieldsValue(res.data)
+      parseCrontab(res.data.cron)
     }
   }
 
@@ -30,6 +35,11 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
     if (res.ok) {
       setRunnerList(res.data.list)
     }
+  }
+
+  const parseCrontab = (cron) => {
+    const cronNextList = getCrontabSchedule(cron)
+    setCronNextList(cronNextList)
   }
 
   useEffect(() => {
@@ -69,6 +79,11 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
     console.log('Failed:', errorInfo)
   }
 
+  const onValuesChange = (changedValues, allValues) => {
+    console.log('allValues:', allValues)
+    parseCrontab(allValues.cron)
+  }
+
   return (
     <Form
       form={form}
@@ -79,6 +94,7 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
       initialValues={initialValues}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      onValuesChange={onValuesChange}
       autoComplete="off"
     >
       <Form.Item
@@ -94,7 +110,7 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
         <Input placeholder="任务描述" />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         label="执行器"
         name="runnerId"
         rules={[
@@ -111,19 +127,19 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
             label: item.title,
           }))}
         />
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
-        label="任务名称"
-        name="taskName"
+        label="调用链接"
+        name="url"
         rules={[
           {
             required: true,
-            message: '请输入任务名称',
+            message: '请输入调用链接',
           },
         ]}
       >
-        <Input placeholder="任务名称" />
+        <Input placeholder="调用链接" />
       </Form.Item>
 
       <Form.Item
@@ -132,7 +148,19 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
         rules={[
           {
             required: true,
-            message: '输入crontab表达式',
+            validator: (rule, value) => {
+              // if (!value) {
+              //   return Promise.reject(new Error('请输入cron表达式'))
+              // }
+
+              if (
+                isValidCronExpression(value)
+              ) {
+                return Promise.resolve()
+              } else {
+                return Promise.reject(new Error('输入正确的crontab表达式'))
+              }
+            },
           },
         ]}
       >
@@ -145,6 +173,12 @@ export default function TaskEditForm({ currentRow, onSuccess, onCancel }) {
         valuePropName="checked"
       >
         <Switch />
+      </Form.Item>
+
+      <Form.Item label="执行计划">
+        {cronNextList.map((item) => {
+          return <div>{item}</div>
+        })}
       </Form.Item>
 
       <Form.Item

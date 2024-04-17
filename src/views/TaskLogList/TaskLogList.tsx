@@ -56,10 +56,10 @@ const App: React.FC = () => {
           ].includes(item.status);
 
           const date1 = dayjs(item.createTime);
-          const date2 = dayjs(item.updateTime);
+          const date2 = dayjs(item.endTime);
           const now = dayjs();
 
-          if (item.isComplete) {
+          if (item.endTime) {
             item.diffTime = date2.diff(date1, "seconds");
           } else {
             item.diffTime = now.diff(date1, "seconds");

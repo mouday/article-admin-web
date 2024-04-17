@@ -18,26 +18,26 @@ export const statusEnum = {
 };
 
 export const statusOptions = [
-  {
-    label: "启动失败",
-    value: statusEnum.TaskStatusStartError,
-    color: red[5],
-  },
+  // {
+  //   label: "启动失败",
+  //   value: statusEnum.TaskStatusStartError,
+  //   color: red[5],
+  // },
   {
     label: "启动成功",
     value: statusEnum.TaskStatusStartSuccess,
     color: yellow[6],
   },
-  {
-    label: "开始运行",
-    value: statusEnum.TaskStatusStartRun,
-    color: blue[6],
-  },
-  {
-    label: "运行中",
-    value: statusEnum.TaskStatusRunning,
-    color: blue[6],
-  },
+  // {
+  //   label: "开始运行",
+  //   value: statusEnum.TaskStatusStartRun,
+  //   color: blue[6],
+  // },
+  // {
+  //   label: "运行中",
+  //   value: statusEnum.TaskStatusRunning,
+  //   color: blue[6],
+  // },
   {
     label: "运行成功",
     value: statusEnum.TaskStatusRunningSuccess,
