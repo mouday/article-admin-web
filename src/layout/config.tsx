@@ -17,10 +17,10 @@ export const MENU_ITEMS = [
   
 
 
-  {
-    label: "执行器",
-    key: "/runner-list",
-    icon: <AppstoreOutlined />,
+  // {
+  //   label: "执行器",
+  //   key: "/runner-list",
+  //   icon: <AppstoreOutlined />,
     // children: [
     //   {
     //     label: "Table",
@@ -31,7 +31,7 @@ export const MENU_ITEMS = [
     //     key: "/form",
     //   },
     // ],
-  },
+  // },
 
   {
     label: "任务列表",

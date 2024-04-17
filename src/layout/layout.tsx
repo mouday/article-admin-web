@@ -18,6 +18,7 @@ import LayoutMenu from './LayoutMenu'
 import { getCurrentPath } from './config'
 import { Avatar, Button } from 'antd'
 import { getToken, removeToken } from '@/utils/token-util'
+import userAvatar from '@/assets/user-avatar.gif'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -100,7 +101,8 @@ const AppLayout: React.FC = () => {
           >
             <div className="layout__user">
               <Avatar
-                size={32}
+                size={42}
+                src={userAvatar}
                 icon={<UserOutlined />}
               />
               <span className="layout__username">{username}</span>
