@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Work Admin Web
 
 ![](img/login.png)
 
