@@ -49,8 +49,8 @@ export const MENU_ITEMS = [
     // ],
   },
   {
-    label: "分类日志",
-    key: "/task-log-list",
+    label: "文章分类",
+    key: "/category-list",
     icon: <DesktopOutlined />,
     // children: [
     //   {

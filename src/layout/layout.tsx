@@ -8,7 +8,7 @@ import {
   AppstoreOutlined,
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Breadcrumb, Layout, Menu, theme, Dropdown } from 'antd'
+import { Breadcrumb, Layout, Menu, theme, Dropdown,Spin } from 'antd'
 import './layout.css'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Link, useRoutes, Outlet } from 'react-router-dom'
@@ -39,6 +39,7 @@ const AppLayout: React.FC = () => {
   const currentRoute = useLocation()
   const navigateTo = useNavigate()
 
+  const [spinning, setSpinning] = React.useState(false)
   const [items, setItems] = useState([])
 
   const dropdownItems = [
@@ -51,6 +52,12 @@ const AppLayout: React.FC = () => {
   const { username } = useSelector((state: any) => {
     return {
       username: state.user.username,
+    }
+  })
+
+  const { loading } = useSelector((state: any) => {
+    return {
+      loading: state.loading.loading,
     }
   })
 
@@ -119,6 +126,11 @@ const AppLayout: React.FC = () => {
         Cron Admin ©2024 Created by Mouday
         </Footer> */}
       </Layout>
+
+      <Spin
+        spinning={loading}
+        fullscreen
+      />
     </Layout>
   )
 }

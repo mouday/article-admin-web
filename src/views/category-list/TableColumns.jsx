@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import type { ColumnsType } from 'antd/es/table'
+
 import { Space, Switch, Popconfirm, Button, Table, Tag } from 'antd'
 import {
   DeleteOutlined,
@@ -10,21 +10,12 @@ import {
 
 export default [
   {
-    title: '文章标题',
+    title: '分类名称',
     dataIndex: 'title',
     key: 'title',
     align: 'center',
     render: (_, record) => {
-      return (
-        <div className="text-left">
-          <a
-            href={record.url}
-            target="_blank"
-          >
-            {record.title || record.url}
-          </a>
-        </div>
-      )
+      return <div className="text-left">{record.title}</div>
     },
   },
 

@@ -11,7 +11,8 @@ import Login from "../views/Login/Login";
 
 const Home = React.lazy(() => import("../views/Home/Home"));
 const About = React.lazy(() => import("../views/About/About"));
-const ArticleList = React.lazy(() => import("../views/ArticleList/ArticleList"));
+const ArticleList = React.lazy(() => import("../views/article-list/ArticleList"));
+const CategoryList = React.lazy(() => import("../views/category-list/CategoryList"));
 const TaskLogList = React.lazy(() => import("../views/TaskLogList/TaskLogList"));
 const Form = React.lazy(() => import("../views/Form/Form"));
 const Log = React.lazy(() => import("../views/Log/Log"));
@@ -46,6 +47,10 @@ export const routes: Route[] = [
         path: "/article-list",
         element: withLoadingComponent(<ArticleList />),
       },
+      {
+        path: "/category-list",
+        element: withLoadingComponent(<CategoryList />),
+      },      
       {
         path: "/task-log-list",
         element: withLoadingComponent(<TaskLogList />),

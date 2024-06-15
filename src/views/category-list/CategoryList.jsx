@@ -1,15 +1,16 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
-import { Space, Switch, Table, Tag } from 'antd'
+import { Space, Switch, Table, Tag, Spin, Drawer } from 'antd'
 
 import TaskEditForm from './EditForm'
 import TableColumns from './TableColumns'
 import { Button, Modal, message, Checkbox, Form, Input } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 import api from '@/request/api'
 import request from '@/request/request'
 
-const App: React.FC = () => {
+const App = () => {
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentRow, setCurrentRow] = useState(null)
@@ -31,8 +32,10 @@ const App: React.FC = () => {
   }
 
   const handleStatusChange = async (record, value) => {
-    const res = await request.post('/updateArticleStatus', {
-      articleId: record.articleId,
+    setLoading(true)
+
+    const res = await request.post('/updateCategoryStatus', {
+      categoryId: record.categoryId,
       status: value,
     })
 
@@ -41,6 +44,8 @@ const App: React.FC = () => {
         content: '操作成功',
       })
     }
+
+    setLoading(false)
   }
 
   const handleEditRow = async (record) => {
@@ -49,8 +54,8 @@ const App: React.FC = () => {
   }
 
   const handleDeleteRow = async (record) => {
-    const res = await request.post('/deleteArticle', {
-      articleId: record.articleId,
+    const res = await request.post('/deleteCategory', {
+      categoryId: record.categoryId,
     })
 
     if (res.ok) {
@@ -64,10 +69,7 @@ const App: React.FC = () => {
   const getData = async (value) => {
     setLoading(true)
 
-    const res = await request.post('/getArticlePage', {
-      page: value.current,
-      size: value.pageSize,
-    })
+    const res = await request.post('/getCategoryList', {})
 
     if (res.ok) {
       const resList = res.data.list.map((item) => {
@@ -131,14 +133,15 @@ const App: React.FC = () => {
       <Button
         type="primary"
         onClick={showModal}
+        icon={<PlusOutlined />}
       >
-        添加文章
+        添加分类
       </Button>
 
       <Table
         className="mt-4"
         bordered
-        rowKey="articleId"
+        rowKey="categoryId"
         loading={loading}
         columns={TableColumns}
         dataSource={list}
@@ -146,12 +149,25 @@ const App: React.FC = () => {
         onChange={handlePageChange}
       />
 
-      <Modal
-        title={<div className="text-center">编辑文章</div>}
+      <Drawer
+        title={currentRow ? '编辑分类' : '添加分类'}
+        open={isModalOpen}
+        destroyOnClose={true}
+        onClose={handleTaskEditFormCancel}
+      >
+        <TaskEditForm
+          currentRow={currentRow}
+          onCancel={handleTaskEditFormCancel}
+          onSuccess={handleTaskEditFormSuccess}
+        ></TaskEditForm>
+      </Drawer>
+
+      {/* <Modal
+        title={<div className="text-center">编辑分类</div>}
         footer={null}
         open={isModalOpen}
         destroyOnClose={true}
-        width="600px"
+        width="400px"
         onCancel={handleTaskEditFormCancel}
       >
         <TaskEditForm
@@ -160,7 +176,7 @@ const App: React.FC = () => {
           onCancel={handleTaskEditFormCancel}
           onSuccess={handleTaskEditFormSuccess}
         ></TaskEditForm>
-      </Modal>
+      </Modal> */}
     </>
   )
 }

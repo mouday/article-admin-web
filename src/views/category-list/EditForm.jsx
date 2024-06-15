@@ -9,10 +9,10 @@ import { isValidCronExpression, getCrontabSchedule } from '@/utils/cron-util'
 import { Spin } from 'antd'
 
 const rules = {
-  url: [
+  title: [
     {
       required: true,
-      message: '请输入文章链接',
+      message: '请输入分类标题',
     },
   ],
 }
@@ -36,10 +36,9 @@ export default function TaskEditForm({
   const [form] = Form.useForm()
 
   const getData = async () => {
-    setSpinning(true)
 
-    const res = await request.post('/getArticle', {
-      articleId: currentRow.articleId,
+    const res = await request.post('/getCategory', {
+      categoryId: currentRow.categoryId,
     })
 
     if (res.ok) {
@@ -50,13 +49,13 @@ export default function TaskEditForm({
   }
 
   useEffect(() => {
-    if (currentRow && currentRow.articleId) {
+    if (currentRow && currentRow.categoryId) {
       getData()
     }
   }, [])
 
-  const addArticle = async (values) => {
-    let res = await request.post('/addArticle', values)
+  const addCategory = async (values) => {
+    let res = await request.post('/addCategory', values)
 
     if (res.ok) {
       message.success({
@@ -66,8 +65,8 @@ export default function TaskEditForm({
     }
   }
 
-  const updateArticle = async (values) => {
-    let res = await request.post('/updateArticle', values)
+  const updateCategory = async (values) => {
+    let res = await request.post('/updateCategory', values)
 
     if (res.ok) {
       message.success({
@@ -82,13 +81,13 @@ export default function TaskEditForm({
 
     setSpinning(true)
 
-    if (currentRow && currentRow.articleId) {
-      await updateArticle({
+    if (currentRow && currentRow.categoryId) {
+      await updateCategory({
         ...values,
-        articleId: currentRow.articleId,
+        categoryId: currentRow.categoryId,
       })
     } else {
-      await addArticle({ ...values })
+      await addCategory({ ...values })
     }
 
     setSpinning(false)
@@ -101,44 +100,18 @@ export default function TaskEditForm({
         rootClassName={rootClassName}
         name="basic"
         labelCol={{
-          span: 4,
+          span: 6,
         }}
         initialValues={initialValues}
         onFinish={onFinish}
         autoComplete="off"
       >
         <Form.Item
-          label="文章标题"
+          label="分类标题"
           name="title"
+          rules={rules.title}
         >
-          <Input placeholder="文章标题" />
-        </Form.Item>
-
-        {/* <Form.Item
-        label="执行器"
-        name="runnerId"
-        rules={[
-          {
-            required: true,
-            message: '请选择执行器',
-          },
-        ]}
-      >
-        <Select
-          style={{ width: 120 }}
-          options={runnerList.map((item) => ({
-            value: item.runnerId,
-            label: item.title,
-          }))}
-        />
-      </Form.Item> */}
-
-        <Form.Item
-          label="文章链接"
-          name="url"
-          rules={rules.url}
-        >
-          <Input placeholder="文章链接" />
+          <Input placeholder="分类标题" />
         </Form.Item>
 
         <Form.Item
