@@ -10,46 +10,26 @@ import {
 
 export default [
   {
-    title: '任务描述',
+    title: '文章标题',
     dataIndex: 'title',
     key: 'title',
     align: 'center',
     render: (_, record) => {
-      return <div className="text-left">{record.title}</div>
+      return (
+        <div className="text-left">
+          <a
+            href={record.url}
+            target="_blank"
+          >
+            {record.title || record.url}
+          </a>
+        </div>
+      )
     },
   },
 
-  // {
-  //   title: '执行器',
-  //   dataIndex: 'runnerName',
-  //   key: 'runnerName',
-  //   align: 'center',
-  //   render: (_, record) => {
-  //     return <div className="text-left">{record.runnerName}</div>
-  //   },
-  // },
-
   {
-    title: '调用链接',
-    dataIndex: 'url',
-    key: 'url',
-    align: 'center',
-    render: (_, record) => {
-      return <div className="text-left">{record.url}</div>
-    },
-  },
-  {
-    title: 'Cron',
-    align: 'center',
-    dataIndex: 'cron',
-    key: 'cron',
-    width: 200,
-    render: (_, record) => {
-      return <div className="text-left">{record.cron}</div>
-    },
-  },
-  {
-    title: '运行状态',
+    title: '状态',
     align: 'center',
     dataIndex: 'status',
     key: 'status',
@@ -65,43 +45,15 @@ export default [
       )
     },
   },
-  {
-    title: '日志',
-    key: 'action',
-    align: 'center',
-    width: 80,
-    render: (_, record) => (
-      <Button
-        type="link"
-        onClick={() => {
-          record.handleShowLog(record)
-        }}
-      >
-        <ContainerOutlined />
-      </Button>
-    ),
-  },
 
   {
     title: '操作',
     align: 'center',
     dataIndex: 'taskId',
     key: 'taskId',
-    width: 160,
+    width: 120,
     render: (_, record) => (
       <Space size="middle">
-        <Popconfirm
-          title="确认运行"
-          description=""
-          onConfirm={() => {
-            record.handleRunRow(record)
-          }}
-        >
-          <Button type="link">
-            <PlayCircleOutlined className="cursor-pointer" />
-          </Button>
-        </Popconfirm>
-
         <Button
           type="link"
           onClick={() => {

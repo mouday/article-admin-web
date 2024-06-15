@@ -34,8 +34,8 @@ export const MENU_ITEMS = [
   // },
 
   {
-    label: "任务列表",
-    key: "/task-list",
+    label: "文章列表",
+    key: "/article-list",
     icon: <PieChartOutlined />,
     // children: [
     //   {
@@ -49,7 +49,7 @@ export const MENU_ITEMS = [
     // ],
   },
   {
-    label: "任务日志",
+    label: "分类日志",
     key: "/task-log-list",
     icon: <DesktopOutlined />,
     // children: [
