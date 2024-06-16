@@ -1,1 +1,0 @@
-import{bj as i,Z as l,bk as u,r as s,j as t,$ as g}from"./index-e3aeee9e.js";function p(){i();const[e,m]=l();console.log(e);const{taskLogId:o}=u(),[r,c]=s.useState(""),n=async()=>{const a=await g.getTaskLogDetail({taskLogId:o});a.ok&&c(a.data)};return s.useEffect(()=>{n()},[]),t.jsx("div",{className:"log-wrap",children:t.jsx("pre",{children:r})})}export{p as default};
