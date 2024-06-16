@@ -13,7 +13,11 @@ import { ConfigProvider } from "antd";
 import zhCN from "antd/locale/zh_CN";
 // for date-picker i18n
 import "dayjs/locale/zh-cn";
+import dayjs from 'dayjs';
 
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('zh-cn');
 // 使用mock
 // useMock();
 

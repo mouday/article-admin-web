@@ -51,9 +51,13 @@ export default [
             ? tags.map((tag) => {
                 return (
                   <Tag
+                    className="cursor-pointer"
                     key={tag}
                     bordered={false}
                     color="blue"
+                    onClick={() => {
+                      record.handleTagClick(tag)
+                    }}
                   >
                     {tag}
                   </Tag>
@@ -62,6 +66,16 @@ export default [
             : '-'}
         </div>
       )
+    },
+  },
+
+  {
+    title: '创建日期',
+    dataIndex: 'createDate',
+    key: 'createDate',
+    align: 'center',
+    render: (_, record) => {
+      return <>{record.createDate || '-'}</>
     },
   },
 

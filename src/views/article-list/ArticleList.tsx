@@ -1,26 +1,37 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
-import { Space, Drawer, Switch, Table, Tag, Spin } from 'antd'
+import { Space, Drawer, Select, Switch, Table, Tag, Spin } from 'antd'
 
 import TaskEditForm from './EditForm'
 import TableColumns from './TableColumns'
 import { Button, Modal, message, Checkbox, Form, Input } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, DownloadOutlined } from '@ant-design/icons'
 import api from '@/request/api'
 import request from '@/request/request'
+import FileSaver from 'file-saver'
+import SelectCategory from '@/components/SelectCategory/SelectCategory.jsx'
+import { DatePicker } from 'antd'
+import dayjs from 'dayjs'
+
+const { Search } = Input
 
 const App: React.FC = () => {
   const [list, setList] = useState([])
+  const [keyword, setKeyword] = useState('')
+  const [categoryId, setCategoryId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [currentRow, setCurrentRow] = useState(null)
+  const [week, setWeek] = useState(null)
   const [messageApi, contextHolder] = message.useMessage()
 
-  const [pagination, setPagination] = useState({
+  const defaultPagination = {
     position: ['bottomCenter'],
     total: 0,
     current: 1,
     pageSize: 10,
-  })
+  }
+
+  const [pagination, setPagination] = useState(defaultPagination)
 
   const resetData = async () => {
     setPagination((pre) => {
@@ -69,12 +80,46 @@ const App: React.FC = () => {
     setLoading(false)
   }
 
+  const handleTagClick = (tag) => {
+    setPagination({ ...defaultPagination })
+
+    setKeyword((pre) => {
+      getData({ keyword: tag })
+
+      return tag
+    })
+  }
+
+  const getDateRange = (value) => {
+    const currentValue = value === undefined ? week : value
+    if (!currentValue) {
+      return {}
+    } else {
+      return {
+        startDate: currentValue
+          .startOf('week')
+          .startOf('day')
+          .format('YYYY-MM-DD HH:mm:ss'),
+        endDate: currentValue
+          .endOf('week')
+          .endOf('day')
+          .format('YYYY-MM-DD HH:mm:ss'),
+      }
+    }
+  }
+
   const getData = async (value) => {
+    console.log(value)
+    const dateRange = getDateRange(value.week)
     setLoading(true)
 
     const res = await request.post('/getArticlePage', {
-      page: value.current,
-      size: value.pageSize,
+      page: value.current ?? pagination.current,
+      size: value.pageSize ?? pagination.pageSize,
+      keyword: value.keyword ?? keyword,
+      categoryId: value.categoryId ?? categoryId ?? -1,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
     })
 
     if (res.ok) {
@@ -82,7 +127,11 @@ const App: React.FC = () => {
         item.handleStatusChange = handleStatusChange
         item.handleEditRow = handleEditRow
         item.handleDeleteRow = handleDeleteRow
+        item.handleTagClick = handleTagClick
 
+        if (item.createTime) {
+          item.createDate = dayjs(item.createTime).format('YYYY-MM-DD')
+        }
         return item
       })
 
@@ -124,25 +173,115 @@ const App: React.FC = () => {
         ...value,
       }
 
-      getData(newValue)
+      getData({
+        ...newValue,
+      })
 
       return newValue
     })
   }
 
+  const handleSearch = (value) => {
+    console.log(value)
+
+    setKeyword((pre) => {
+      getData({
+        keyword: value,
+      })
+
+      return value
+    })
+  }
+
+  const renderArticle = async () => {
+    const dateRange = getDateRange(value.week)
+
+    const res = await request.post('/renderArticle', {
+      keyword: keyword,
+      categoryId: categoryId ?? -1,
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    })
+
+    if (res.ok) {
+      var blob = new Blob([res.data], {
+        type: 'text/plain;charset=utf-8',
+      })
+      FileSaver.saveAs(blob, 'Article.md')
+    }
+  }
+
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value)
+  }
+
+  const handleCategoryChange = (value) => {
+    console.log(value)
+
+    setCategoryId((pre) => {
+      getData({
+        categoryId: value || -1,
+      })
+      return value
+    })
+  }
+
+  const handleDateRangeChange = (date, dateString) => {
+    console.log(date, dateString)
+    setWeek((pre) => {
+      getData({
+        week: date,
+      })
+      return date
+    })
+  }
+
   useEffect(() => {
-    getData(pagination)
+    getData({ ...pagination })
   }, [])
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={showModal}
-        icon={<PlusOutlined />}
-      >
-        添加文章
-      </Button>
+      <div className="flex">
+        <Button
+          type="primary"
+          onClick={showModal}
+          icon={<PlusOutlined />}
+        >
+          添加文章
+        </Button>
+
+        <SelectCategory
+          className="ml-4"
+          value={categoryId}
+          onChange={handleCategoryChange}
+        ></SelectCategory>
+
+        <DatePicker
+          className="ml-4"
+          onChange={handleDateRangeChange}
+          picker="week"
+        />
+
+        <Search
+          style={{ width: '240px' }}
+          className="ml-4"
+          value={keyword}
+          placeholder="搜索文章标题、标签"
+          onSearch={handleSearch}
+          onChange={handleKeywordChange}
+          enterButton
+          allowClear
+        />
+
+        <Button
+          className="ml-auto"
+          onClick={renderArticle}
+          icon={<DownloadOutlined />}
+        >
+          导出文章
+        </Button>
+      </div>
 
       <Table
         className="mt-4"

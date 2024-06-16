@@ -2,16 +2,16 @@ import React from 'react'
 import { Tag, Input } from 'antd'
 
 export default function TagInput({ value = [], placeholder = '', onChange }) {
-  const defaultValue = value || []
-
   const [inputValue, setInputValue] = React.useState('')
 
   const handlePressEnter = (e) => {
-    e.preventDefault();
-    
-    console.log(e.target.value)
+    e.preventDefault()
 
-    onChange([...new Set([...defaultValue, e.target.value])])
+    if (Array.isArray(value)) {
+      onChange([...new Set([...value, e.target.value])])
+    } else {
+      onChange([e.target.value])
+    }
 
     setInputValue('')
   }
@@ -21,7 +21,7 @@ export default function TagInput({ value = [], placeholder = '', onChange }) {
   }
 
   const handleTagClose = (tag) => {
-    onChange(defaultValue.filter((t) => t !== tag))
+    onChange(value.filter((t) => t !== tag))
   }
 
   return (
@@ -33,21 +33,22 @@ export default function TagInput({ value = [], placeholder = '', onChange }) {
         onPressEnter={handlePressEnter}
       />
       <div className="mt-2">
-        {defaultValue.map((tag) => {
-          return (
-            <Tag
-              key={tag}
-              bordered={false}
-              closable
-              color="blue"
-              onClose={(tag) => {
-                handleTagClose(tag)
-              }}
-            >
-              {tag}
-            </Tag>
-          )
-        })}
+        {value &&
+          value.map((tag) => {
+            return (
+              <Tag
+                key={tag}
+                bordered={false}
+                closable
+                color="blue"
+                onClose={() => {
+                  handleTagClose(tag)
+                }}
+              >
+                {tag}
+              </Tag>
+            )
+          })}
       </div>
     </div>
   )

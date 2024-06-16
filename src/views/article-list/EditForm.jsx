@@ -34,7 +34,6 @@ export default function TaskEditForm({
 
   const initialValues = {
     status: true,
-    // tags: []
   }
 
   // const [messageApi, contextHolder] = message.useMessage();
