@@ -86,7 +86,7 @@ const AppLayout: React.FC = () => {
             <AppstoreOutlined />
           </div>
         ) : (
-          <div className="layout__logo">Cron Admin</div>
+          <div className="layout__logo">Article Admin</div>
         )}
         <LayoutMenu></LayoutMenu>
       </Sider>
