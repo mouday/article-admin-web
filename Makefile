@@ -5,4 +5,4 @@ dev:
 # make dep-pro
 .PHONY: dep-pro
 dep-pro:
-	npm run build && cp -R ./dist/* ../cron-admin/src/public/
+	npm run build && cp -R ./dist/* ../article-admin/src/public/
