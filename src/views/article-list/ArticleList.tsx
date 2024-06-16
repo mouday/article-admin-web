@@ -194,7 +194,7 @@ const App: React.FC = () => {
   }
 
   const renderArticle = async () => {
-    const dateRange = getDateRange(value.week)
+    const dateRange = getDateRange()
 
     const res = await request.post('/renderArticle', {
       keyword: keyword,

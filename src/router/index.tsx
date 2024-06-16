@@ -13,6 +13,7 @@ const Home = React.lazy(() => import("../views/Home/Home"));
 const About = React.lazy(() => import("../views/About/About"));
 const ArticleList = React.lazy(() => import("../views/article-list/ArticleList"));
 const CategoryList = React.lazy(() => import("../views/category-list/CategoryList"));
+const TagList = React.lazy(() => import("../views/tag-list/TagList.jsx"));
 const TaskLogList = React.lazy(() => import("../views/TaskLogList/TaskLogList"));
 const Form = React.lazy(() => import("../views/Form/Form"));
 const Log = React.lazy(() => import("../views/Log/Log"));
@@ -51,6 +52,11 @@ export const routes: Route[] = [
         path: "/category-list",
         element: withLoadingComponent(<CategoryList />),
       },      
+      {
+        path: "/tag-list",
+        element: withLoadingComponent(<TagList />),
+      },  
+      
       {
         path: "/task-log-list",
         element: withLoadingComponent(<TaskLogList />),

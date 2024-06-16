@@ -6,49 +6,16 @@ import {
   FormOutlined,
   ContainerOutlined,
   PlayCircleOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
 } from '@ant-design/icons'
 
 export default [
   {
-    title: '分类名称',
+    title: '标签名称',
     dataIndex: 'title',
     key: 'title',
     align: 'center',
     render: (_, record) => {
       return <div className="text-left">{record.title}</div>
-    },
-  },
-
-  {
-    title: '排序',
-    dataIndex: 'orderValue',
-    key: 'orderValue',
-    align: 'center',
-    width: 100,
-    render: (_, record, index) => {
-      return (
-        <>
-          <Button
-            type="link"
-            icon={<ArrowUpOutlined />}
-            disabled={record.isFirst}
-            onClick={() => {
-              record.handleMoveUp(index)
-            }}
-          />
-
-          <Button
-            type="link"
-            disabled={record.isLast}
-            icon={<ArrowDownOutlined />}
-            onClick={() => {
-              record.handleMoveDown(index)
-            }}
-          />
-        </>
-      )
     },
   },
 

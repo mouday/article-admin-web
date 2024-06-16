@@ -34,8 +34,8 @@ const App = () => {
   const handleStatusChange = async (record, value) => {
     setLoading(true)
 
-    const res = await request.post('/updateCategoryStatus', {
-      categoryId: record.categoryId,
+    const res = await request.post('/updateTagStatus', {
+      tagId: record.tagId,
       status: value,
     })
 
@@ -48,44 +48,14 @@ const App = () => {
     setLoading(false)
   }
 
-  const handleOrderChange = async (source, target) => {
-    console.log(source, target);
-    setLoading(true)
-
-    await request.post('/updateCategoryOrderValue', {
-      categoryId: source.categoryId,
-      orderValue: target.orderValue || target.categoryId,
-    })
-
-    await request.post('/updateCategoryOrderValue', {
-      categoryId: target.categoryId,
-      orderValue: source.orderValue || source.categoryId,
-    })
-
-    message.success({
-      content: '操作成功',
-    })
-
-    resetData()
-
-    setLoading(false)
-  }
-
-  const handleMoveDown = (list, index) => {
-    handleOrderChange(list[index], list[index + 1])
-  }
-  const handleMoveUp = (list, index) => {
-    handleOrderChange(list[index], list[index - 1])
-  }
-
   const handleEditRow = async (record) => {
     setCurrentRow(record)
     setIsModalOpen(true)
   }
 
   const handleDeleteRow = async (record) => {
-    const res = await request.post('/deleteCategory', {
-      categoryId: record.categoryId,
+    const res = await request.post('/deleteTag', {
+      tagId: record.tagId,
     })
 
     if (res.ok) {
@@ -99,23 +69,13 @@ const App = () => {
   const getData = async (value) => {
     setLoading(true)
 
-    const res = await request.post('/getCategoryList', {})
+    const res = await request.post('/getTagPage', {})
 
     if (res.ok) {
-      const len = res.data.list.length
-
-      const resList = res.data.list.map((item, index) => {
+      const resList = res.data.list.map((item) => {
         item.handleStatusChange = handleStatusChange
         item.handleEditRow = handleEditRow
         item.handleDeleteRow = handleDeleteRow
-        item.handleMoveUp = (index)=>{handleMoveUp(res.data.list, index)}
-        item.handleMoveDown = (index)=>{handleMoveDown(res.data.list, index)}
-
-        if(len == index + 1){
-          item.isLast = true
-        } else if(index == 0){
-          item.isFirst = true
-        }
 
         return item
       })
@@ -175,13 +135,13 @@ const App = () => {
         onClick={showModal}
         icon={<PlusOutlined />}
       >
-        添加分类
+        添加标签
       </Button>
 
       <Table
         className="mt-4"
         bordered
-        rowKey="categoryId"
+        rowKey="tagId"
         loading={loading}
         columns={TableColumns}
         dataSource={list}
@@ -190,7 +150,7 @@ const App = () => {
       />
 
       <Drawer
-        title={currentRow ? '编辑分类' : '添加分类'}
+        title={currentRow ? '编辑标签' : '添加标签'}
         open={isModalOpen}
         destroyOnClose={true}
         onClose={handleTaskEditFormCancel}

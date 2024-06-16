@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
-  AppstoreOutlined,
-} from "@ant-design/icons";
+
+  AppstoreOutlined
+} from '@ant-design/icons'
 
 export const MENU_ITEMS = [
   // {
@@ -14,28 +15,26 @@ export const MENU_ITEMS = [
   //   key: "/home",
   //   icon: <PieChartOutlined />,
   // },
-  
-
 
   // {
   //   label: "执行器",
   //   key: "/runner-list",
   //   icon: <AppstoreOutlined />,
-    // children: [
-    //   {
-    //     label: "Table",
-    //     key: "/table",
-    //   },
-    //   {
-    //     label: "Form",
-    //     key: "/form",
-    //   },
-    // ],
+  // children: [
+  //   {
+  //     label: "Table",
+  //     key: "/table",
+  //   },
+  //   {
+  //     label: "Form",
+  //     key: "/form",
+  //   },
+  // ],
   // },
 
   {
-    label: "文章列表",
-    key: "/article-list",
+    label: '文章列表',
+    key: '/article-list',
     icon: <PieChartOutlined />,
     // children: [
     //   {
@@ -49,8 +48,8 @@ export const MENU_ITEMS = [
     // ],
   },
   {
-    label: "文章分类",
-    key: "/category-list",
+    label: '文章分类',
+    key: '/category-list',
     icon: <DesktopOutlined />,
     // children: [
     //   {
@@ -63,7 +62,13 @@ export const MENU_ITEMS = [
     //   },
     // ],
   },
-  
+
+  {
+    label: '标签管理',
+    key: '/tag-list',
+    icon: <AppstoreOutlined />,
+  },
+
   // {
   //   label: "数据",
   //   key: "/data",
@@ -79,14 +84,14 @@ export const MENU_ITEMS = [
   //     },
   //   ],
   // },
-];
+]
 
 export function getCurrentPath(pathname) {
-  let routePath = [];
+  let routePath = []
 
   for (let item of MENU_ITEMS) {
     if (item.key == pathname) {
-      routePath.push(item);
+      routePath.push(item)
     }
     //  else if (item?.children) {
     //   let currentChild = item?.children.find((child) => {
@@ -99,5 +104,5 @@ export function getCurrentPath(pathname) {
     //   }
     // }
   }
-  return routePath;
+  return routePath
 }
