@@ -47,6 +47,10 @@ export default function TaskEditForm({
     })
 
     if (res.ok) {
+      if (res.data.categoryId == 0) {
+        res.data.categoryId = null
+      }
+
       form.setFieldsValue(res.data)
     }
 
@@ -102,6 +106,10 @@ export default function TaskEditForm({
     console.log('Success:', values)
 
     setSpinning(true)
+    
+    if(!values.categoryId){
+      values.categoryId = 0;
+    }
 
     if (currentRow && currentRow.articleId) {
       await updateArticle({
