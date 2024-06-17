@@ -114,8 +114,8 @@ const App: React.FC = () => {
     setLoading(true)
 
     const res = await request.post('/getArticlePage', {
-      page: value.current ?? pagination.current,
-      size: value.pageSize ?? pagination.pageSize,
+      pageNumber: value.current ?? pagination.current,
+      pageSize: value.pageSize ?? pagination.pageSize,
       keyword: value.keyword ?? keyword,
       categoryId: value.categoryId ?? categoryId ?? -1,
       startDate: dateRange.startDate,
