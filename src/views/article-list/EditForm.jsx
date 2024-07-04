@@ -99,6 +99,9 @@ export default function TaskEditForm({
 
   const addArticle = async (values) => {
     console.log(values)
+
+    cacheCategoryId(values.categoryId)
+
     let res = await request.post('/addArticle', values)
 
     if (res.ok) {
