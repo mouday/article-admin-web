@@ -19,6 +19,18 @@ const rules = {
   ],
 }
 
+// 缓存上次一次选中的分类
+function cacheCategoryId(categoryId) {
+  localStorage.setItem('categoryId', categoryId)
+}
+
+function loadCategoryId() {
+  let categoryId = localStorage.getItem('categoryId')
+  if (categoryId) {
+    return parseInt(categoryId)
+  }
+}
+
 export default function TaskEditForm({
   currentRow,
   onSuccess,
@@ -75,12 +87,18 @@ export default function TaskEditForm({
   useEffect(() => {
     if (currentRow && currentRow.articleId) {
       getData()
+    } else {
+      const categoryId = loadCategoryId()
+      if (categoryId) {
+        form.setFieldsValue({ categoryId: categoryId })
+      }
     }
 
     getCategoryList()
   }, [])
 
   const addArticle = async (values) => {
+    console.log(values)
     let res = await request.post('/addArticle', values)
 
     if (res.ok) {
@@ -92,6 +110,10 @@ export default function TaskEditForm({
   }
 
   const updateArticle = async (values) => {
+    console.log(values)
+
+    cacheCategoryId(values.categoryId)
+
     let res = await request.post('/updateArticle', values)
 
     if (res.ok) {
@@ -106,9 +128,9 @@ export default function TaskEditForm({
     console.log('Success:', values)
 
     setSpinning(true)
-    
-    if(!values.categoryId){
-      values.categoryId = 0;
+
+    if (!values.categoryId) {
+      values.categoryId = 0
     }
 
     if (currentRow && currentRow.articleId) {
